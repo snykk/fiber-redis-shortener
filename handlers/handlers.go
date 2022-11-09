@@ -9,7 +9,8 @@ import (
 
 // dto
 type request struct {
-	LongURL string `json:"long_url" binding:"required"`
+	LongURL   string `json:"long_url" binding:"required"`
+	CustomURL string `json:"custom_url"`
 }
 
 type Handler struct {
@@ -24,7 +25,10 @@ func NewHandler(redisCache cache.RedisCache) *Handler {
 
 func Root(ctx *fiber.Ctx) error {
 	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message": "Welcome to fiber url shortener API",
+		"message":     "Welcome to fiber url shortener API",
+		"maintainer":  "Moh. Najib Fikri aka snykk",
+		"repository":  "https://github.com/snykk/fiber-redis-shortener",
+		"another api": "https://golib-backend.herokuapp.com/",
 	})
 }
 
@@ -32,18 +36,39 @@ func (h Handler) ShortenURL(ctx *fiber.Ctx) error {
 	var req request
 	if err := ctx.BodyParser(&req); err != nil {
 		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": err.Error(),
+			"status": false,
+			"error":  err.Error(),
 		})
 	}
 
-	shortenURL := utils.Randomize(10)
+	var shortenURL string
+	if req.CustomURL == "" {
+		shortenURL = utils.SecureRandomString(10)
+		for redisURL, _ := h.redisCache.Get(shortenURL); redisURL != ""; {
+			shortenURL = utils.SecureRandomString(10)
+		}
+	} else {
+		redisURL, _ := h.redisCache.Get(req.CustomURL)
+		if redisURL != "" {
+			return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"status":  false,
+				"message": "shorten url already exists",
+			})
+		}
+
+		shortenURL = req.CustomURL
+	}
+
+	// set shorten url to redis
 	if err := h.redisCache.Set(shortenURL, req.LongURL); err != nil {
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": err.Error(),
+			"status": false,
+			"error":  err.Error(),
 		})
 	}
 
 	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+		"status":      true,
 		"message":     "shorten url created successfully",
 		"shorten_url": config.AppConfig.Host + shortenURL,
 	})
@@ -55,7 +80,8 @@ func (h Handler) ResolveURL(ctx *fiber.Ctx) error {
 	originURL, err := h.redisCache.Get(shortenURL)
 	if err != nil {
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": err.Error(),
+			"status": false,
+			"error":  err.Error(),
 		})
 	}
 
