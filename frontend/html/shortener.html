@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Shorten Now</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="flex items-center h-[100vh] text-white bg-[#07001a] text-center">
+      <div class="flex flex-col items-center justify-center w-[99vw] lg:w-[60vw] px-4 py-32 mx-auto h:screen lg:h-screen sm:items-center lg:flex">
+        <h1 class="text-3xl font-extrabold text-transparent sm:text-5xl bg-clip-text bg-gradient-to-r from-orange-300 via-blue-500 to-purple-600 mb-3">URL Shortener</h1>
+        <div id="loading" style="display: none">
+          <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_raiw2hpe.json" background="transparent" speed="1" style="width: auto; height: 125px" loop autoplay> </lottie-player>
+        </div>
+        <div class="flex justify-center items-center mx-2 mb-6 basis-2">
+          <svg id="bounce" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 duration-300 stroke-red-400 animate-bounce">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+          </svg>
+          <div id="error" class="text-red-500 hover:rotate-2 hover:scale-105 transition-all duration-300 cursor-pointer" style="display: none"></div>
+          <a id="link-shortened" href="" class="cursor-pointer" target="_blank" style="display: none">
+            <input id="shortened-url" class="leading-tight tracking-tighter bg-transparent border-none appearance-none focus:tracking-wider focus:outline-none text-sky-400 cursor-pointer" disabled />
+          </a>
+          <button
+            id="clipboard"
+            class="bg-gray-300 bg-opacity-20 hover:bg-opacity-30 focus:bg-opacity-40 focus:bg-gray-200 transition-all duration-300 text-white font-bold py-1 px-2"
+            value="https://www.google.com"
+            onclick="clipboard()"
+            style="display: none"
+          >
+            Copy
+          </button>
+        </div>
+
+        <form class="w-full max-w-md">
+          <div class="flex items-center py-2 border-b border-teal-500">
+            <input class="w-[50%] py-1 mr-3 leading-tight tracking-tighter bg-transparent border-none appearance-none text-gray-200 focus:tracking-wider focus:outline-none" type="text" value="http://localhost:8080/" disabled />
+            <input
+              class="w-[50%] py-1 mr-3 leading-tight tracking-tighter bg-transparent border-none appearance-none text-sky-500 focus:tracking-wider focus:outline-none"
+              type="text"
+              id="custom-url"
+              placeholder="Custom URL (Optional)"
+              aria-label="custom_url"
+            />
+          </div>
+          <div class="flex items-center py-2 border-b border-teal-500">
+            <input
+              class="w-full px-2 py-1 mr-3 leading-tight tracking-tighter bg-transparent border-none appearance-none text-sky-500 focus:tracking-wider focus:outline-none"
+              type="text"
+              id="url-input"
+              placeholder="Paste URL Here"
+              aria-label="url"
+            />
+          </div>
+          <button
+            class="flex-shrink-0 px-2 py-1 mt-5 w-[100%] text-sm text-white transition-all duration-300 bg-teal-500 border-4 border-teal-500 rounded hover:bg-teal-700 hover:border-teal-700"
+            type="button"
+            id="shorten-btn"
+            onclick="shortenUrl()"
+          >
+            Shorten!
+          </button>
+        </form>
+      </div>
+    </section>
+    <script src="/static/js/shorten.js"></script>
+    <script src="/static/js/clipboard.js"></script>
+
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  </body>
+</html>

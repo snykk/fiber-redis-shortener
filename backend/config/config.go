@@ -24,8 +24,8 @@ type Config struct {
 func InitializeAppConfig() error {
 	viper.SetConfigName(".env") // allow directly reading from .env file
 	viper.SetConfigType("env")
-	viper.AddConfigPath(".")
-	viper.AddConfigPath("./config")
+	viper.AddConfigPath("../backend")
+	viper.AddConfigPath("./backend/config")
 	viper.AddConfigPath("/")
 	viper.AllowEmptyEnv(true)
 	viper.AutomaticEnv()

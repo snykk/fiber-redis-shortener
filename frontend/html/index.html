@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>URL Shortener</title>
+  </head>
+  <body>
+    <section class="flex items-center text-white bg-[#07001a] h-[100vh]">
+      <div class="max-w-screen-xl px-4 py-32 mx-auto lg:h-screen lg:items-center lg:flex">
+        <div class="max-w-3xl mx-auto text-center">
+          <h1 class="text-3xl font-extrabold text-transparent sm:text-5xl bg-clip-text bg-gradient-to-r from-orange-300 via-blue-500 to-purple-600">URL Shortener</h1>
+
+          <p class="max-w-xl mx-auto mt-4 font-sans text-center sm:leading-relaxed sm:text-xl">
+            <span class="flex justify-center mt-2 mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="ionicon w-8 h-8 duration-300 stroke-red-400 animate-bounce" viewBox="0 0 512 512">
+                <title>Rocket</title>
+                <path
+                  d="M461.81 53.81a4.4 4.4 0 00-3.3-3.39c-54.38-13.3-180 34.09-248.13 102.17a294.9 294.9 0 00-33.09 39.08c-21-1.9-42-.3-59.88 7.5-50.49 22.2-65.18 80.18-69.28 105.07a9 9 0 009.8 10.4l81.07-8.9a180.29 180.29 0 001.1 18.3 18.15 18.15 0 005.3 11.09l31.39 31.39a18.15 18.15 0 0011.1 5.3 179.91 179.91 0 0018.19 1.1l-8.89 81a9 9 0 0010.39 9.79c24.9-4 83-18.69 105.07-69.17 7.8-17.9 9.4-38.79 7.6-59.69a293.91 293.91 0 0039.19-33.09c68.38-68 115.47-190.86 102.37-247.95zM298.66 213.67a42.7 42.7 0 1160.38 0 42.65 42.65 0 01-60.38 0z"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="32"
+                />
+                <path d="M109.64 352a45.06 45.06 0 00-26.35 12.84C65.67 382.52 64 448 64 448s65.52-1.67 83.15-19.31A44.73 44.73 0 00160 402.32" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
+              </svg>
+            </span>
+            <span>
+              Extremely
+              <span class="relative inline-block mx-2 before:block before:absolute before:-inset-1 before:skew-y-2 before:bg-gradient-to-r before:from-cyan-400 before:via-cyan-500 before:to-cyan-600 before:hover:bg-gradient-to-br">
+                <span class="relative mx-2 text-white">Swift & Free</span>
+              </span>
+              URL Shortener Build with
+              <span class="font-semibold tracking-tighter text-blue-400">
+                <a href="https://go.dev/" target="_blank" class="hover:underline">Go</a>
+              </span>
+            </span>
+          </p>
+
+          <div class="flex flex-wrap justify-center gap-4 mt-8">
+            <a
+              href="shorten"
+              class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
+            >
+              <span class="relative px-3 py-1 sm:px-5 md:px-7 sm:py-2 md:py-3 lg:text-xl lg:px-10 lg:py-4 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"> Shorten Now! </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

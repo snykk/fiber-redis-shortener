@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/snykk/fiber-redis-shortener/cache"
-	"github.com/snykk/fiber-redis-shortener/config"
-	"github.com/snykk/fiber-redis-shortener/utils"
+	"github.com/snykk/fiber-redis-shortener/backend/cache"
+	"github.com/snykk/fiber-redis-shortener/backend/config"
+	"github.com/snykk/fiber-redis-shortener/backend/utils"
 )
 
 // dto
@@ -24,12 +24,18 @@ func NewHandler(redisCache cache.RedisCache) *Handler {
 }
 
 func Root(ctx *fiber.Ctx) error {
-	return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message":     "Welcome to fiber url shortener API",
-		"maintainer":  "Moh. Najib Fikri aka snykk",
-		"repository":  "https://github.com/snykk/fiber-redis-shortener",
-		"another api": "https://golib-backend.herokuapp.com/",
-	})
+	// return ctx.Status(fiber.StatusOK).JSON(fiber.Map{
+	// 	"message":     "Welcome to fiber url shortener API",
+	// 	"maintainer":  "Moh. Najib Fikri aka snykk",
+	// 	"repository":  "https://github.com/snykk/fiber-redis-shortener",
+	// 	"another api": "https://golib-backend.herokuapp.com/",
+	// })
+
+	return ctx.Render("index", fiber.Map{})
+}
+
+func Shorten(ctx *fiber.Ctx) error {
+	return ctx.Render("shortener", fiber.Map{})
 }
 
 func (h Handler) ShortenURL(ctx *fiber.Ctx) error {
@@ -79,10 +85,7 @@ func (h Handler) ResolveURL(ctx *fiber.Ctx) error {
 	shortenURL := ctx.Params("shortenURL")
 	originURL, err := h.redisCache.Get(shortenURL)
 	if err != nil {
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"status": false,
-			"error":  err.Error(),
-		})
+		return ctx.Render("errors", fiber.Map{})
 	}
 
 	ctx.Redirect(originURL, fiber.StatusTemporaryRedirect)
